@@ -23,15 +23,21 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.border
+import android.content.res.Configuration
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MessageCard(Message("Android", "Jetpack Compose"))
+            JetpackcomposeTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    MessageCard(Message("Android", "Jetpack Compose"))
+                }
             }
         }
     }
+}
 
 data class  Message(val author: String, val body: String)
 
@@ -47,24 +53,45 @@ fun MessageCard(msg: Message) {
                 .size(40.dp)
                 // Clip image to be shaped as a circle
                 .clip(CircleShape)
+                .border(1.5.dp, MaterialTheme.colorScheme.secondary, CircleShape)
         )
         
         // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(8.dp))
 
         Column {
-            Text(text = msg.author)
+            Text(
+                text = msg.author,
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.titleMedium
+            )
             // Add a vertical space between the author and message texts
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = msg.body)
+
+            Surface(shape = MaterialTheme.shapes.medium, shadowElevation = 1.dp) {
+                Text(
+                    text = msg.body,
+                    modifier = Modifier.padding(all = 4.dp),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }
 
-@Preview
+@Preview(name = "Light Mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark Mode"
+)
 @Composable
 fun PreviewMessageCard() {
-    MessageCard(
-        msg = Message("Colleague", "Hey, take a look ate Jetpack Compose, it's great!")
-    )
+    JetpackcomposeTheme {
+        Surface {
+            MessageCard(
+                msg = Message("Colleague", "Hey, take a look ate Jetpack Compose, it's great!")
+            )
+        }
+    }
 }
