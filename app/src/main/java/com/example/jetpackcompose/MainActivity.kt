@@ -51,7 +51,7 @@ data class  Message(val author: String, val body: String)
 @Composable
 fun MessageCard(msg: Message) {
     // Add padding around our message
-    Row(modifier = Modifier.padding(all = 8.dp)) {
+    Row {
         Image(
             painter = painterResource(R.drawable.profile_picture),
             contentDescription = "Contact profile picture",
@@ -62,7 +62,7 @@ fun MessageCard(msg: Message) {
                 .clip(CircleShape)
                 .border(1.5.dp, MaterialTheme.colorScheme.secondary, CircleShape)
         )
-        
+
         // Add a horizontal space between the image and the column
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -86,7 +86,7 @@ fun MessageCard(msg: Message) {
 
             Surface(
                 shape = MaterialTheme.shapes.medium,
-                shadowElevation = 1.dp
+                shadowElevation = 1.dp,
                 // surfaceColor color will be changing gradually from primary to surface
                 color = surfaceColor,
                 // animateContentSize will change the Surface size gradually
@@ -136,5 +136,6 @@ fun Conversation(messages: List<Message>) {
 fun PreviewConversation() {
     JetpackcomposeTheme {
         Conversation(SampleData.conversationSample)
+
     }
 }
